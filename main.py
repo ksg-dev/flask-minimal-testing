@@ -1,10 +1,25 @@
+from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, Field, SubmitField
 from flask import Flask, render_template
 from wtforms.widgets import TextInput
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import Integer, String, Text, ForeignKey
+from typing import List
 
+#### Initialize App
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "laiweuhf"
+Bootstrap5(app)
+
+#### Create db
+class Base(DeclarativeBase):
+    pass
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
 
 
 # Create Custom "Tag" Field for Concepts
