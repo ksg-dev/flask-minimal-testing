@@ -9,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, ForeignKey
 from typing import List
+import requests
 
 
 #### Initialize App
@@ -32,7 +33,26 @@ GH_TOKEN = os.environ["GITHUB_TOKEN"]
 GH_USERNAME = os.environ["GITHUB_USERNAME"]
 
 
-def get_events():
+# def get_events():
+#     headers = {
+#         "accept": "application/vnd.github+json",
+#         "authorization": f"Bearer {GH_TOKEN}",
+#         "X-GitHub-Api-Version": "2022-11-28"
+#     }
+#
+#     api_url = "https://api.github.com/"
+#
+#     user_events = f"{api_url}users/{GH_USERNAME}/events"
+#
+#     response = requests.get(url=user_events, headers=headers)
+#     response.raise_for_status()
+#     events = response.json()
+#
+#     return events
+
+
+@app.route('/')
+def home():
     headers = {
         "accept": "application/vnd.github+json",
         "authorization": f"Bearer {GH_TOKEN}",
@@ -47,19 +67,11 @@ def get_events():
     response.raise_for_status()
     events = response.json()
 
-    return events
 
 
-@app.route('/', methods=["GET", "POST"])
-def home():
-    form = MyForm()
-    if form.validate_on_submit():
-        name = form.name.data,
-        tags = form.tags.data
-        print(name)
-        print(tags)
-        return 'Tags:{}'.format(tags)
-    return render_template('index.html', form=form)
+
+
+
 
 
 if __name__ == '__main__':
