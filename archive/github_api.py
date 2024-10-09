@@ -97,7 +97,7 @@ for name in my_repos:
         commits.append(commit_data)
 
 
-with open("repos.json", "a") as file:
+with open("payloads/repos.json", "a") as file:
     json.dump(commits, file)
 
 
